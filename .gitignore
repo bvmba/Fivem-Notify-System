@@ -1,0 +1,20 @@
+# FiveM
+*.log
+*.cache
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+TECHNICAL_DOCS.md
