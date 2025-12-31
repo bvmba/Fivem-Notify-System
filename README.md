@@ -162,8 +162,6 @@ exports['bvmba_notify']:Notify(title, message, type, duration, position)
 - `duration` (number, opzionale) - Durata in millisecondi (default: Config.DefaultDuration)
 - `position` (string, opzionale) - Posizione sullo schermo (default: Config.Position)
 
-**Ritorna:** Nessun valore
-
 ## 📄 Licenza
 
 Questo progetto è rilasciato sotto licenza MIT. Vedi il file `LICENSE` per maggiori dettagli.
