@@ -28,8 +28,7 @@ RegisterNetEvent('bvmba_notify:show', function(data)
     })
 end)
 
--- Uso: exports['bvmba_notify']:Notify(title, message, type, duration, position)
--- type: "success", "error", "info", "warning" (default: "info")
+
 exports('Notify', function(title, message, type, duration, position)
     if not Config then
         print("^1[bvmba_notify] ERRORE: Config non trovato! Assicurati che config.lua sia caricato.^7")
@@ -44,8 +43,3 @@ exports('Notify', function(title, message, type, duration, position)
         position = position or Config.Position
     })
 end)
-
-RegisterCommand('bvmbanotifytest', function()
-    exports[GetCurrentResourceName()]:Notify("Test Notifica", "Sistema di notifiche funzionante!", "success", 5000)
-end, false)
-

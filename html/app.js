@@ -50,7 +50,7 @@ const sanitizeHTML = str => {
 const processLineBreaks = str => str.replace(/&lt;br&gt;/g, "<br>");
 
 const notification = (data) => {
-    if (typeof $ === "undefined") return console.error("jQuery is required.");
+    if (typeof $ === "undefined") return console.error("jQuery è richiesto.");
 
     let title = data.title ? sanitizeHTML(data.title).replace(/~s~/g, "") : "";
     let message = data.message ? sanitizeHTML(data.message).replace(/~s~/g, "") : "";
@@ -69,24 +69,42 @@ const notification = (data) => {
     const container = $(`#${position}`);
     const colorConfig = data.colorConfig || { color: "#3498db", borderColor: "#2980b9" };
 
-    if (!container.length) return console.error(`Container #${position} not found.`);
+    if (!container.length) return console.error(`Container #${position} non trovato.`);
+
+    const radius = 16;
+    const circumference = 2 * Math.PI * radius;
 
     const notif = $(`
         <div id="${id}" class="notify notify-${data.type} fadeIn" style="border-left-color: ${colorConfig.borderColor}">
             <div class="notify-content">
                 <h3 class="notify-title">${title}</h3>
                 <p class="notify-text">${message}</p>
-                <div class="notify-progress" style="background-color: ${colorConfig.color}"></div>
+            </div>
+            <div class="notify-progress-circular">
+                <svg viewBox="0 0 36 36">
+                    <circle class="circle-bg" cx="18" cy="18" r="${radius}"/>
+                    <circle class="circle-progress" cx="18" cy="18" r="${radius}" 
+                            stroke-dasharray="${circumference}" 
+                            stroke-dashoffset="0"
+                            style="stroke: ${colorConfig.color}"/>
+                </svg>
             </div>
         </div>
     `).appendTo(container);
 
-    $(`#${id} .notify-progress`).css({ transition: `width ${duration}ms linear`, width: "0%" });
-    setTimeout(() => $(`#${id} .notify-progress`).css("width", "100%"), 10);
+    const progressCircle = $(`#${id} .circle-progress`);
+    progressCircle.css({ transition: `stroke-dashoffset ${duration}ms linear` });
+    
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            progressCircle.css("stroke-dashoffset", circumference);
+        });
+    });
 
     if (data.notificationSoundEnabled && data.soundConfig) {
         playNotificationSound(data.soundConfig);
     }
+
     setTimeout(() => {
         $(`#${id}`).removeClass("fadeIn").addClass("fadeOut");
         setTimeout(() => $(`#${id}`).remove(), 500);
@@ -98,7 +116,7 @@ const notification = (data) => {
 w.addEventListener("message", (event) => {
     notification({
         type: event.data.type,
-        title: event.data.title || "New Notification",
+        title: event.data.title || "Nuova Notifica",
         message: event.data.message || "",
         duration: event.data.duration,
         position: event.data.position,

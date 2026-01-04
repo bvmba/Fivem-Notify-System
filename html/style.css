@@ -83,6 +83,7 @@ body {
 
 .notify {
 	display: flex;
+	align-items: center;
 	width: 300px;
 	background: var(--background);
 	border-radius: 8px;
@@ -109,11 +110,9 @@ body {
 	border-left-color: var(--warning-border);
 }
 
-
 .notify-content {
 	flex: 1;
 	position: relative;
-	padding-bottom: 8px;
 }
 
 .notify-title {
@@ -129,13 +128,48 @@ body {
 	font-weight: 400;
 }
 
-.notify-progress {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	height: 2px;
+/* Progress circolare */
+.notify-progress-circular {
+	position: relative;
+	width: 36px;
+	height: 36px;
+	flex-shrink: 0;
+	margin-left: 12px;
+}
+
+.notify-progress-circular svg {
+	transform: rotate(-90deg);
 	width: 100%;
-	border-radius: 1px;
+	height: 100%;
+}
+
+.notify-progress-circular .circle-bg {
+	fill: none;
+	stroke: rgba(255, 255, 255, 0.1);
+	stroke-width: 3;
+}
+
+.notify-progress-circular .circle-progress {
+	fill: none;
+	stroke-width: 3;
+	stroke-linecap: round;
+	transition: stroke-dashoffset 0.1s linear;
+}
+
+.notify-success .circle-progress {
+	stroke: var(--success-border);
+}
+
+.notify-error .circle-progress {
+	stroke: var(--error-border);
+}
+
+.notify-info .circle-progress {
+	stroke: var(--info-border);
+}
+
+.notify-warning .circle-progress {
+	stroke: var(--warning-border);
 }
 
 #top-right .fadeIn,
